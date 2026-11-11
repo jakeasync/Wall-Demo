@@ -279,9 +279,10 @@ export default function WallPage() {
     const currentAuthor = authorName.trim() || 'Jake Macua'
 
     if (isSupabaseConfigured) {
-      // Build payload matching columns: body, photo_url / image_url
+      // Build payload matching columns: body, photo_url / image_url, and author_name
       const postPayload: Record<string, any> = {
         body: message.trim(),
+        author_name: 'Jake Macua',
       }
       if (uploadedImageUrl) {
         postPayload.photo_url = uploadedImageUrl
@@ -294,10 +295,27 @@ export default function WallPage() {
         .select()
         .single()
 
+      // If user table didn't have author_name column, retry without it
+      if (error && error.message.includes('author_name')) {
+        const noAuthorPayload: Record<string, any> = {
+          body: message.trim(),
+        }
+        if (uploadedImageUrl) {
+          noAuthorPayload.photo_url = uploadedImageUrl
+          noAuthorPayload.image_url = uploadedImageUrl
+        }
+        const retry = await supabase.from('posts').insert([noAuthorPayload]).select().single()
+        data = retry.data
+        error = retry.error
+      }
+
       // If user altered schema to use photo_url instead of image_url, try fallback
       if (error && error.message.includes('image_url') && uploadedImageUrl) {
         const fallbackPayload = {
           body: message.trim(),
+          photo_url: uploadedImageUrl,
+          author_name: 'Jake Macua',
+        }
           photo_url: uploadedImageUrl,
         }
         const retry = await supabase.from('posts').insert([fallbackPayload]).select().single()
