@@ -1,4 +1,4 @@
-# Facebook Wall (2008 Edition)
+# My Wall React App
 
 A pixel-perfect retro 2008 Facebook Wall built with **React 19**, **Next.js (App Router)**, **Supabase (Database + Realtime)**, and **Tailwind CSS**.
 
