@@ -4,6 +4,9 @@ export interface Post {
   id: string
   user_id?: string | null
   body: string
+  photo_url?: string | null
+  image_url?: string | null
+  author_name?: string | null
   created_at: string
 }
 

@@ -14,6 +14,9 @@ A pixel-perfect retro 2008 Facebook Wall built with **React 19**, **Next.js (App
 - **Real-Time Live Feed**:
   - Connects to Supabase Realtime using Postgres Change feeds (`INSERT` events on the `posts` table).
   - Posts automatically appear in reverse-chronological order (newest first) without needing a page refresh.
+- **Optional Photo Upload**:
+  - Attach images directly from the Wall composer (`wall-photos` bucket in Supabase Storage).
+  - Previews selected photos before posting, with responsive rendering on Wall feed items.
 - **Supabase Integration**:
   - Full schema setup with RLS policies and realtime publication script included in `supabase-setup.sql`.
   - Graceful fallback: functions out-of-the-box locally even before database keys are hooked up.
