@@ -82,7 +82,7 @@ export default function WallPage() {
   const [uploadingImage, setUploadingImage] = useState(false)
   const fileInputRef = useRef<HTMLInputElement | null>(null)
   const profilePhotoInputRef = useRef<HTMLInputElement | null>(null)
-  const [profilePhotoUrl, setProfilePhotoUrl] = useState<string>('/jake-placeholder.svg')
+  const [profilePhotoUrl, setProfilePhotoUrl] = useState<string>('/avatar.svg')
 
   // Load custom profile photo from localStorage if user uploaded one previously
   useEffect(() => {
@@ -374,7 +374,7 @@ export default function WallPage() {
                 className="w-full h-full object-cover object-top transition-transform duration-200 group-hover:scale-102"
                 onError={(e) => {
                   const target = e.currentTarget
-                  target.src = '/jake-placeholder.svg'
+                  target.src = '/avatar.svg'
                 }}
               />
               {/* Hover overlay hint */}
