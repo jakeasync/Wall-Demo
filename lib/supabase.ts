@@ -10,8 +10,18 @@ export interface Post {
   created_at: string
 }
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || ''
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || ''
+// Supabase Configuration
+// Supports both Vercel Supabase integration variables and standard NEXT_PUBLIC_ variables
+const supabaseUrl =
+  process.env.NEXT_PUBLIC_SUPABASE_URL ||
+  process.env.SUPABASE_URL ||
+  'https://secyvabajzyprkyyycpl.supabase.co'
+
+const supabaseAnonKey =
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ||
+  process.env.SUPABASE_ANON_KEY ||
+  process.env.SUPABASE_PUBLISHABLE_KEY ||
+  'sb_publishable__lj4pY0-GlUfHNR6TPtKsQ_SbaZAGsT'
 
 export const isSupabaseConfigured = Boolean(
   supabaseUrl &&
@@ -21,9 +31,5 @@ export const isSupabaseConfigured = Boolean(
   !supabaseUrl.includes('placeholder')
 )
 
-// Fallback client to prevent runtime crash before user puts actual credentials
-export const supabase = createClient(
-  isSupabaseConfigured ? supabaseUrl : 'https://placeholder.supabase.co',
-  isSupabaseConfigured ? supabaseAnonKey : 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.placeholder'
-)
+export const supabase = createClient(supabaseUrl, supabaseAnonKey)
 
